@@ -1,6 +1,6 @@
 'use strict';Object.defineProperty(exports,'__esModule',{value:true});function _interopDefault(e){return(e&&(typeof e==='object')&&'default'in e)?e['default']:e}var Vue=_interopDefault(require('vue')),Spinner=_interopDefault(require('vue-simple-spinner'));//
 var script = {
-  name: 'SnackbarPlugin',
+  name: 'Snackbard',
   components: { Spinner: Spinner },
   extends: Vue,
   props: {
@@ -239,24 +239,24 @@ var server = createInjectorSSR;/* script */
 var __vue_script__ = script;
 
 /* template */
-var __vue_render__ = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"__snackbarContainer",attrs:{"id":_vm.id}},[_c('transition-group',{attrs:{"name":"fade"}},[_c('div',{directives:[{name:"show",rawName:"v-show",value:(_vm.show),expression:"show"}],key:("snackbar_key_" + _vm.id),staticClass:"__snackbarBox",style:(_vm.computedBackgroundColor)},[_c('div',{staticClass:"__snackbarText"},[(_vm.loading)?_c('span',[_vm._v("\n          "+_vm._s(_vm.computedLoadingText)+"\n        ")]):_c('span',[_vm._v("\n          "+_vm._s(_vm.text)+"\n        ")])]),_vm._v(" "),(_vm.loading)?_c('spinner',{attrs:{"size":_vm.spinnerSize,"line-fg-color":_vm.spinnerColor,"line-bg-color":_vm.backgroundColor,"indeterminate":""}}):_c('div',{staticClass:"__snackbarButton",style:(("color: " + _vm.buttonColor + ";")),on:{"click":function($event){return _vm.fireClickEvent()}}},[_vm._v("\n        "+_vm._s(_vm.buttonText)+"\n      ")])],1)])],1)};
+var __vue_render__ = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"__snackbardContainer",attrs:{"id":_vm.id}},[_c('transition-group',{attrs:{"name":"fade"}},[_c('div',{directives:[{name:"show",rawName:"v-show",value:(_vm.show),expression:"show"}],key:("snackbard_key_" + _vm.id),staticClass:"__snackbardBox",style:(_vm.computedBackgroundColor)},[_c('div',{staticClass:"__snackbardText"},[(_vm.loading)?_c('span',[_vm._v("\n          "+_vm._s(_vm.computedLoadingText)+"\n        ")]):_c('span',[_vm._v("\n          "+_vm._s(_vm.text)+"\n        ")])]),_vm._v(" "),(_vm.loading)?_c('spinner',{attrs:{"size":_vm.spinnerSize,"line-fg-color":_vm.spinnerColor,"line-bg-color":_vm.backgroundColor,"indeterminate":""}}):_c('div',{staticClass:"__snackbardButton",style:(("color: " + _vm.buttonColor + ";")),on:{"click":function($event){return _vm.fireClickEvent()}}},[_vm._v("\n        "+_vm._s(_vm.buttonText)+"\n      ")])],1)])],1)};
 var __vue_staticRenderFns__ = [];
 
   /* style */
   var __vue_inject_styles__ = function (inject) {
     if (!inject) { return }
-    inject("data-v-5f299027_0", { source: "@import url(https://fonts.googleapis.com/css?family=Roboto);.__snackbarContainer[data-v-5f299027]{display:flex;flex-direction:row;justify-content:center;align-content:center;top:0;width:500px;z-index:1000;position:absolute;left:50%;margin-left:-250px;position:fixed}.__snackbarBox[data-v-5f299027]{border-radius:3px;display:inline-flex;align-items:center;min-width:250px;max-width:500px;max-height:80px;padding:14px 24px;display:grid;grid-template-columns:3fr 1fr;grid-template-rows:auto;grid-gap:24px;grid-template-areas:\"text action\";box-shadow:0 1px 10px 0 rgba(0,0,0,.75)}.__snackbarText[data-v-5f299027]{grid-area:text;color:#fff}.__snackbarButton[data-v-5f299027]{grid-area:action;text-transform:uppercase;cursor:pointer;user-select:none;text-align:center}*[data-v-5f299027]{font-family:Roboto}.fade-enter-active[data-v-5f299027],.fade-leave-active[data-v-5f299027]{transition:all .4s ease}.fade-enter[data-v-5f299027],.fade-leave-to[data-v-5f299027]{transform:translateY(-30px);opacity:0}", map: undefined, media: undefined });
+    inject("data-v-3ec838b0_0", { source: "@import url(https://fonts.googleapis.com/css?family=Roboto);.__snackbardContainer[data-v-3ec838b0]{display:flex;flex-direction:row;justify-content:center;align-content:center;top:0;width:500px;z-index:1000;position:absolute;left:50%;margin-left:-250px;position:fixed}.__snackbardBox[data-v-3ec838b0]{border-radius:3px;display:inline-flex;align-items:center;min-width:250px;max-width:500px;max-height:80px;padding:14px 24px;display:grid;grid-template-columns:3fr 1fr;grid-template-rows:auto;grid-gap:24px;grid-template-areas:\"text action\";box-shadow:0 1px 10px 0 rgba(0,0,0,.75)}.__snackbardText[data-v-3ec838b0]{grid-area:text;color:#fff}.__snackbardButton[data-v-3ec838b0]{grid-area:action;text-transform:uppercase;cursor:pointer;user-select:none;text-align:center}*[data-v-3ec838b0]{font-family:Roboto}.fade-enter-active[data-v-3ec838b0],.fade-leave-active[data-v-3ec838b0]{transition:all .4s ease}.fade-enter[data-v-3ec838b0],.fade-leave-to[data-v-3ec838b0]{transform:translateY(-30px);opacity:0}", map: undefined, media: undefined });
 
   };
   /* scoped */
-  var __vue_scope_id__ = "data-v-5f299027";
+  var __vue_scope_id__ = "data-v-3ec838b0";
   /* module identifier */
-  var __vue_module_identifier__ = "data-v-5f299027";
+  var __vue_module_identifier__ = "data-v-3ec838b0";
   /* functional template */
   var __vue_is_functional_template__ = false;
 
   
-  var snSnackbar = normalizeComponent_1(
+  var snackbard = normalizeComponent_1(
     { render: __vue_render__, staticRenderFns: __vue_staticRenderFns__ },
     __vue_inject_styles__,
     __vue_script__,
@@ -271,7 +271,7 @@ var openSnackbar = {};
 
 // install function executed by Vue.use()
 function install (Vue) {
-  Vue.prototype.$snackbar = {
+  Vue.prototype.$snackbard = {
     show: function (config) {
       show(Vue, config);
     },
@@ -295,7 +295,7 @@ function install (Vue) {
         destroy({ id: openSnackbar.id });
       } else {
         if (openSnackbar.component) { openSnackbar.component.show = false; }
-        if (openSnackbar.id && snackbarIsAlreadyOpen()) {
+        if (openSnackbar.id && snackbardIsAlreadyOpen()) {
           destroy({ id: openSnackbar.id, force: true });
         }
       }
@@ -318,18 +318,18 @@ function install (Vue) {
 }
 
 function show (Vue, config) {
-  if (!snackbarIsAlreadyOpen()) {
-    var snackbarDivId = '__sn_snackbar';
-    var snackbarDiv = document.createElement('div');
-    snackbarDiv.id = snackbarDivId;
-    document.body.appendChild(snackbarDiv);
-    var Snackbar = Vue.extend(snSnackbar);
+  if (!snackbardIsAlreadyOpen()) {
+    var snackbardDivId = '__sn_snackbard';
+    var snackbardDiv = document.createElement('div');
+    snackbardDiv.id = snackbardDivId;
+    document.body.appendChild(snackbardDiv);
+    var Snackbar = Vue.extend(snackbard);
     var component = new Snackbar({
       propsData: {
         buttonColor: config.buttonColor,
         buttonText: config.buttonText,
         color: config.color,
-        id: snackbarDivId,
+        id: snackbardDivId,
         loading: config.loading,
         spinnerSize: config.spinnerSize,
         spinnerColor: config.spinnerColor,
@@ -339,11 +339,11 @@ function show (Vue, config) {
         onClick: config.onClick
       }
     });
-    openSnackbar.id = snackbarDivId;
+    openSnackbar.id = snackbardDivId;
     openSnackbar.component = component;
-    component.$on('close', function (_) { return destroy({ id: snackbarDivId, force: true }); });
-    component.$mount(("#" + snackbarDivId));
-    if (!config.loading && config.timeout !== 0) { destroy({ id: snackbarDivId, timeout: config.timeout }); }
+    component.$on('close', function (_) { return destroy({ id: snackbardDivId, force: true }); });
+    component.$mount(("#" + snackbardDivId));
+    if (!config.loading && config.timeout !== 0) { destroy({ id: snackbardDivId, timeout: config.timeout }); }
   }
 }
 
@@ -366,8 +366,8 @@ function destroy (ref) {
   }
 }
 
-function snackbarIsAlreadyOpen () {
-  return document.querySelectorAll('[id^="__sn_snackbar"]').length > 0
+function snackbardIsAlreadyOpen () {
+  return document.querySelectorAll('[id^="__sn_snackbard"]').length > 0
 }
 
 // Create module definition for Vue.use()
@@ -389,9 +389,9 @@ if (GlobalVue) {
 
 // Inject install function into component - allows component
 // to be registered via Vue.use() as well as Vue.component()
-snSnackbar.install = install;
+snackbard.install = install;
 
 // It's possible to expose named exports when writing components that can
-// also be used as directives, etc. - eg. import { RollupDemoDirective } from 'rollup-demo';
-// export const RollupDemoDirective = component;
-exports.default=snSnackbar;
+// also be used as directives, etc. - eg. import { RollupDemoDirective } from 'rollup-demo'
+// export const RollupDemoDirective = component
+exports.default=snackbard;
