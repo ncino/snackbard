@@ -2,16 +2,16 @@
 <template>
   <div
     :id="id"
-    class="__snackbarContainer"
+    class="__snackbardContainer"
   >
     <transition-group name="fade">
       <div
         v-show="show"
-        :key="`snackbar_key_${id}`"
+        :key="`snackbard_key_${id}`"
         :style="computedBackgroundColor"
-        class="__snackbarBox"
+        class="__snackbardBox"
       >
-        <div class="__snackbarText">
+        <div class="__snackbardText">
           <span v-if="loading">
             {{ computedLoadingText }}
           </span>
@@ -29,7 +29,7 @@
         <div
           v-else
           :style="`color: ${buttonColor};`"
-          class="__snackbarButton"
+          class="__snackbardButton"
           @click="fireClickEvent()"
         >
           {{ buttonText }}
@@ -44,7 +44,7 @@
 import Vue from 'vue'
 import Spinner from 'vue-simple-spinner'
 export default {
-  name: 'SnackbarPlugin',
+  name: 'Snackbard',
   components: { Spinner },
   extends: Vue,
   props: {
@@ -149,7 +149,7 @@ export default {
 
 <style scoped>
 @import url('https://fonts.googleapis.com/css?family=Roboto');
-.__snackbarContainer {
+.__snackbardContainer {
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -162,7 +162,7 @@ export default {
   margin-left: -250px;
   position: fixed;
 }
-.__snackbarBox {
+.__snackbardBox {
   border-radius: 3px;
   display: inline-flex;
   align-items: center;
@@ -178,11 +178,11 @@ export default {
     "text action";
   box-shadow: 0px 1px 10px 0px rgba(0,0,0,0.75);
 }
-.__snackbarText {
+.__snackbardText {
   grid-area: text;
   color: white;
 }
-.__snackbarButton {
+.__snackbardButton {
   grid-area: action;
   text-transform: uppercase;
    cursor: pointer;

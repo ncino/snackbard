@@ -1,11 +1,11 @@
 // Import vue component
-import snSnackbar from './snackbard.vue';
+import snackbard from './snackbard.vue'
 const transitionTime = 300
 let openSnackbar = {}
 
 // install function executed by Vue.use()
 function install (Vue) {
-  Vue.prototype.$snackbar = {
+  Vue.prototype.$snackbard = {
     show: (config) => {
       show(Vue, config)
     },
@@ -25,7 +25,7 @@ function install (Vue) {
         destroy({ id: openSnackbar.id })
       } else {
         if (openSnackbar.component) openSnackbar.component.show = false
-        if (openSnackbar.id && snackbarIsAlreadyOpen()) {
+        if (openSnackbar.id && snackbardIsAlreadyOpen()) {
           destroy({ id: openSnackbar.id, force: true })
         }
       }
@@ -44,18 +44,18 @@ function install (Vue) {
 }
 
 function show (Vue, config) {
-  if (!snackbarIsAlreadyOpen()) {
-    let snackbarDivId = '__sn_snackbar'
-    let snackbarDiv = document.createElement('div')
-    snackbarDiv.id = snackbarDivId
-    document.body.appendChild(snackbarDiv)
-    let Snackbar = Vue.extend(snSnackbar)
+  if (!snackbardIsAlreadyOpen()) {
+    let snackbardDivId = '__sn_snackbard'
+    let snackbardDiv = document.createElement('div')
+    snackbardDiv.id = snackbardDivId
+    document.body.appendChild(snackbardDiv)
+    let Snackbar = Vue.extend(snackbard)
     let component = new Snackbar({
       propsData: {
         buttonColor: config.buttonColor,
         buttonText: config.buttonText,
         color: config.color,
-        id: snackbarDivId,
+        id: snackbardDivId,
         loading: config.loading,
         spinnerSize: config.spinnerSize,
         spinnerColor: config.spinnerColor,
@@ -65,11 +65,11 @@ function show (Vue, config) {
         onClick: config.onClick
       }
     })
-    openSnackbar.id = snackbarDivId
+    openSnackbar.id = snackbardDivId
     openSnackbar.component = component
-    component.$on('close', _ => destroy({ id: snackbarDivId, force: true }))
-    component.$mount(`#${snackbarDivId}`)
-    if (!config.loading && config.timeout !== 0) destroy({ id: snackbarDivId, timeout: config.timeout })
+    component.$on('close', _ => destroy({ id: snackbardDivId, force: true }))
+    component.$mount(`#${snackbardDivId}`)
+    if (!config.loading && config.timeout !== 0) destroy({ id: snackbardDivId, timeout: config.timeout })
   }
 }
 
@@ -88,34 +88,34 @@ function destroy ({ id, timeout = 4000, force = false }) {
   }
 }
 
-function snackbarIsAlreadyOpen () {
-  return document.querySelectorAll('[id^="__sn_snackbar"]').length > 0
+function snackbardIsAlreadyOpen () {
+  return document.querySelectorAll('[id^="__sn_snackbard"]').length > 0
 }
 
 // Create module definition for Vue.use()
 const plugin = {
   install,
-};
+}
 
 // To auto-install when vue is found
 /* global window global */
-let GlobalVue = null;
+let GlobalVue = null
 if (typeof window !== 'undefined') {
-  GlobalVue = window.Vue;
+  GlobalVue = window.Vue
 } else if (typeof global !== 'undefined') {
-  GlobalVue = global.Vue;
+  GlobalVue = global.Vue
 }
 if (GlobalVue) {
-  GlobalVue.use(plugin);
+  GlobalVue.use(plugin)
 }
 
 // Inject install function into component - allows component
 // to be registered via Vue.use() as well as Vue.component()
-snSnackbar.install = install;
+snackbard.install = install
 
 // Export component by default
-export default snSnackbar;
+export default snackbard
 
 // It's possible to expose named exports when writing components that can
-// also be used as directives, etc. - eg. import { RollupDemoDirective } from 'rollup-demo';
-// export const RollupDemoDirective = component;
+// also be used as directives, etc. - eg. import { RollupDemoDirective } from 'rollup-demo'
+// export const RollupDemoDirective = component
