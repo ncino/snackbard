@@ -1,5 +1,7 @@
 // Import vue component
 import snSnackbar from './snackbard.vue';
+const transitionTime = 300
+let openSnackbar = {}
 
 // install function executed by Vue.use()
 function install (Vue) {

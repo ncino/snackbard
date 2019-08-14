@@ -266,6 +266,8 @@ var __vue_staticRenderFns__ = [];
     undefined,
     server
   );// Import vue component
+var transitionTime = 300;
+var openSnackbar = {};
 
 // install function executed by Vue.use()
 function install (Vue) {
