@@ -49,23 +49,23 @@ new Vue({
 
 ## Usage
 
-The `$snackbar` prototype is built on 4 basic methods:
+The `$snackbard` prototype is built on 4 basic methods:
 
 ```
-$snackbar.show(payload)
+$snackbard.show(payload)
 
-$snackbar.loading() // with an optional payload, see below
+$snackbard.loading() // with an optional payload, see below
 
-$snackbar.cancel() // with an optional payload, see below
+$snackbard.cancel() // with an optional payload, see below
 
-$snackbar.success() // again, payload optional
+$snackbard.success() // again, payload optional
 
-$snackbar.error() // payload optional
+$snackbard.error() // payload optional
 ```
 
 Let's go over each method in greater detail.
 
-### `$snackbar.show(payload)`
+### `$snackbard.show(payload)`
 
 | Key Value    	|                                                                                                                                                                                       Description                                                                                                                                                                                      	| Default  	| Accepted Type                                                                                   	|
 |--------------	|:--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------:	|----------	|-------------------------------------------------------------------------------------------------	|
@@ -83,12 +83,124 @@ Let's go over each method in greater detail.
 ```
 doSomeSuperForbiddenThing () {
 	if (personIsAwesome) {
-		this.$snackbar.show({ text: 'Congratulations! You are awesome. Enjoy this 10 second appreciation of your awesomeness', color: 'success', buttonText: 'OK!', timeout: 10000 })
+		this.$snackbard.show({ text: 'Congratulations! You are awesome. Enjoy this 10 second appreciation of your awesomeness', color: 'success', buttonText: 'OK!', timeout: 10000 })
 	} else if (!personIsAwesome) {
-		this.$snackbar.show({ text: 'You are not awesome. Admit it, and then learn how to become awesome.', color: 'error', buttonText: 'teach me', onClick: () => { this.teachUser() }, timeout: 0 })
+		this.$snackbard.show({ text: 'You are not awesome. Admit it, and then learn how to become awesome.', color: 'error', buttonText: 'teach me', onClick: () => { this.teachUser() }, timeout: 0 })
 	}
 }
 teachUser () {
 	this.teachUserHowToBeAwesomeDialog = true
+}
+```
+
+The above information should be most of what you need to know in order to operate the plugin. The following methods are subsets of that method made available for convenience.
+
+### `snackbard.loading()`
+
+This method is a quick and easy way to display a loading snackbar with default text (Loading...) and a spinner. Programatically, the following two expressions are identical:
+
+```
+this.$snackbard.loading() === this.$snackbard.show({ text: 'Loading...', loading: true })
+```
+
+If you are satisfied with default, then you can simply call this.$snackbard.loading() to display it.
+
+However, you can modify the loading snackbar with any of the above parameters in a payload. For example, if you wanted to change the text that is displayed when loading, you would run:
+
+```
+$snackbard.loading({ text: 'Fetching your info...' })
+```
+
+Or, if you wanted to keep the default text, but wanted the spinner to be larger and the background color to be different, you would run:
+
+```
+$snackbard.loading({ spinnerSize: 50, color: 'darkgrey' })
+```
+
+Important notes:
+
+* When you call loading, the timeout parameter is nullified. Setting loading = true will override any value you pass in for timeout. As such...
+* Loading snackbars must always be manually closed programmatically using this.$snackbard.cancel()
+
+
+### `snackbard.cancel()`
+
+The purpose of this method is to cancel a loading snackbar that is called earlier in the code. An example of what this would look like is as follows:
+
+```
+created () {
+	this.$snackbard.loading()
+	this.$axios.get('/some/info/from/api').then(response => {
+		this.$snackbard.cancel()
+		this.foo = response.data.foo
+		this.bar = response.data.bar
+	})
+}
+```
+
+There might be times when you want to notify the user after their information is done loading. In these instances, you can pass the text parameter into an optional payload, along with a color parameter, and when the loading is complete, the information in the snackbar will change to show the color and text provided, and then the snackbar will self-dismiss after the default 3000 milliseconds.
+
+For example, in addition to code above, if you wanted to notify the user that there was actually an error downloading your information, you might add something like this:
+
+```
+	this.$snackbard.loading()
+	this.$axios.get('/some/info/from/api').then(response => {
+		this.$snackbard.cancel()
+		this.foo = response.data.foo
+		this.bar = response.data.bar
+	}).catch(err => {
+		this.$snackbard.cancel({ text: 'There was a problem getting your info!', color: 'error' })
+		console.log(err)
+	})
+}
+```
+
+Important notes:
+
+* The only parameters you can pass to a $snackbard.cancel payload are text and color, all others will be ignored.
+
+### `$snackbard.success()`
+
+```
+$snackbard.success() === $snackbard.show({ text: 'Success!', color: 'success' })
+```
+
+### `$snackbard.error()`
+
+```
+$snackbard.error() === $snackbard.show({ text: 'Error!', color: 'error' })
+```
+
+## Gotchas
+
+### `onClick()`
+parameter
+As mentioned above, you should not pass a predefined method directly as a value for this parameter. Doing so will cause that method to be run whenever the payload object is used at all. Instead, you should wrap it in a parent method.
+
+For example, this will cause unexpected results:
+
+```
+
+created () {
+	this.$snackbard.show({ text: 'Click here for more info.', buttonText: 'INFO', onClick: this.showMoreInfo() })
+}
+methods: {
+	showMoreInfo () {
+		console.log('These are not the droids you\'re looking for')
+	}
+}
+```
+
+Instead, you should pass the method in as such:
+
+```
+
+created () {
+	this.$snackbard.show({ text: 'Click here for more info.', buttonText: 'INFO', onClick: () => { this.showMoreInfo() } })
+}
+methods: {
+	showMoreInfo () {
+		console.log('These are not the droids you\'re looking for')
+	}
 }
 ```
