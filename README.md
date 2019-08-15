@@ -1,4 +1,9 @@
 # Snackbard
+[![npm version](https://badge.fury.io/js/snackbard.svg)](https://badge.fury.io/js/snackbard)
+[![Monthly Downloads](https://img.shields.io/npm/dm/snackbard.svg)](https://www.npmjs.com/package/snackbard)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
+
 
 <p align="center">
   To share the briefest messages with all,<br>
@@ -204,3 +209,19 @@ methods: {
 	}
 }
 ```
+
+## Contributing
+
+An informal list of things that need to be done:
+
+* Write tests & integrate with TravisCI
+* Clean up design a little bit
+
+
+## Author
+
+Hi, that's me, Josh Menden. Feel free to reach out to me with any questions.
+
+## Contributors
+
+* Bryan Muller
