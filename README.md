@@ -215,6 +215,7 @@ methods: {
 An informal list of things that need to be done:
 
 * Write tests & integrate with TravisCI
+* The plugin currently has one dependency -- the loading spinner. I'd love to build that out natively and remove all dependencies.
 * Clean up design a little bit
 
 
