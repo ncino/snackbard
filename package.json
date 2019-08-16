@@ -5,7 +5,7 @@
   "author": "Josh Menden",
   "license": "MIT",
   "main": "dist/snackbard.ssr.js",
-  "types": "index.d.ts",
+  "types": "snackbard.d.ts",
   "module": "dist/snackbard.esm.js",
   "unpkg": "dist/snackbard.min.js",
   "files": [

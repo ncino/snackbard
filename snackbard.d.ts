@@ -2,11 +2,11 @@ import Vue from 'vue';
 
 declare module 'vue/types/vue' {
     interface Vue {
-        $snackbard: Snackbard
+        $snackbard: SnackbardPlugin
     }
 }
 
-type Snackbard = {
+export declare type SnackbardPlugin = {
     loading(config?: SnackbardPayload): void
     show(config: SnackbardPayload): void
     cancel(config?: SnackbardPayload): void
@@ -14,7 +14,11 @@ type Snackbard = {
     error(config?: SnackbardPayload): void
 }
 
-type SnackbardPayload = {
+declare const _default: {
+    install(Vue): void
+}
+
+export declare type SnackbardPayload = {
     buttonColor?: string
     buttonText?: string
     color?: string
@@ -25,3 +29,5 @@ type SnackbardPayload = {
     timeout?: number
     onClick?: Function
 }
+
+export default _default
