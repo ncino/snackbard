@@ -1,4 +1,4 @@
-import Vue from 'vue';
+import _Vue from 'vue';
 
 declare module 'vue/types/vue' {
     interface Vue {
@@ -15,7 +15,7 @@ export declare type SnackbardPlugin = {
 }
 
 declare const _default: {
-    install(Vue): void
+    install(Vue: typeof _Vue): void
 }
 
 export declare type SnackbardPayload = {
