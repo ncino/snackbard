@@ -16,7 +16,7 @@ export declare type SnackbardPlugin = {
 
 declare const _default: {
     install(Vue: typeof _Vue): void
-}
+};
 
 export declare type SnackbardPayload = {
     buttonColor?: string
