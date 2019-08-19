@@ -37,8 +37,8 @@ import router from './router'
 import store from './store'
 Vue.config.productionTip = false
 
-import snackbard from 'snackbard' // import snackbard
-Vue.use(snackbard) // tell Vue to use it
+import Snackbard from 'snackbard' // import snackbard
+Vue.use(Snackbard) // tell Vue to use it
 
 new Vue({
   router,

@@ -5,7 +5,7 @@
   "author": "Josh Menden",
   "license": "MIT",
   "main": "dist/snackbard.ssr.js",
-  "types": "snackbard.d.ts",
+  "types": "types/index.d.ts",
   "module": "dist/snackbard.esm.js",
   "unpkg": "dist/snackbard.min.js",
   "files": [
@@ -16,7 +16,8 @@
     "build": "cross-env NODE_ENV=production rollup --config build/rollup.config.js",
     "build:ssr": "cross-env NODE_ENV=production rollup --config build/rollup.config.js --format cjs",
     "build:es": "cross-env NODE_ENV=production rollup --config build/rollup.config.js --format es",
-    "build:unpkg": "cross-env NODE_ENV=production rollup --config build/rollup.config.js --format iife"
+    "build:unpkg": "cross-env NODE_ENV=production rollup --config build/rollup.config.js --format iife",
+    "test:types": "tsc -p types/tests"
   },
   "dependencies": {
     "vue-simple-spinner": "^1.2.8"
@@ -30,6 +31,7 @@
     "rollup-plugin-replace": "^2.2.0",
     "rollup-plugin-terser": "^4.0.4",
     "rollup-plugin-vue": "^5.0.0",
+    "typescript": "^3.5.3",
     "vue": "^2.6.10",
     "vue-template-compiler": "^2.6.10"
   }
