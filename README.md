@@ -18,7 +18,7 @@
 
 ## Description
 
-No need to know your iambs from your trochees to use this simple Vue plugin. After installing `snackbard`, you will have a global `$snackbard` prototype available in your script with which to manage a material-themed snackbar.
+No need to know your iambs from your trochees to use this simple Vue plugin. After installing `snackbard`, you will have a global `$snackbard` prototype available in your script with which to programmatically manage a material-themed snackbar.
 
 Here are a few examples to show how simple it is to use:
 ```
@@ -42,8 +42,8 @@ import router from './router'
 import store from './store'
 Vue.config.productionTip = false
 
-import snackbard from 'snackbard' // import snackbard
-Vue.use(snackbard) // tell Vue to use it
+import Snackbard from 'snackbard' // import snackbard
+Vue.use(Snackbard) // tell Vue to use it
 
 new Vue({
   router,
