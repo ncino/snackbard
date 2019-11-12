@@ -1,4 +1,4 @@
-'use strict';Object.defineProperty(exports,'__esModule',{value:true});function _interopDefault(e){return(e&&(typeof e==='object')&&'default'in e)?e['default']:e}var Vue=_interopDefault(require('vue')),Spinner=_interopDefault(require('vue-simple-spinner'));//
+'use strict';Object.defineProperty(exports,'__esModule',{value:true});function _interopDefault(e){return(e&&(typeof e==='object')&&'default'in e)?e['default']:e}var Vue=_interopDefault(require('vue')),Spinner=_interopDefault(require('vue-simple-spinner')),vueRuntimeHelpers=require('vue-runtime-helpers');//
 var script = {
   name: 'Snackbard',
   components: { Spinner: Spinner },
@@ -27,6 +27,14 @@ var script = {
       type: Boolean,
       required: false,
       default: false
+    },
+    position: {
+      type: String,
+      required: false,
+      default: 'top',
+      validator: function (value) {
+        return ['top', 'bottom'].includes(value)
+      }
     },
     spinnerColor: {
       type: String,
@@ -102,169 +110,40 @@ var script = {
       this.$emit('close');
     }
   }
-};function normalizeComponent(template, style, script, scopeId, isFunctionalTemplate, moduleIdentifier
-/* server only */
-, shadowMode, createInjector, createInjectorSSR, createInjectorShadow) {
-  if (typeof shadowMode !== 'boolean') {
-    createInjectorSSR = createInjector;
-    createInjector = shadowMode;
-    shadowMode = false;
-  } // Vue.extend constructor export interop.
-
-
-  var options = typeof script === 'function' ? script.options : script; // render functions
-
-  if (template && template.render) {
-    options.render = template.render;
-    options.staticRenderFns = template.staticRenderFns;
-    options._compiled = true; // functional template
-
-    if (isFunctionalTemplate) {
-      options.functional = true;
-    }
-  } // scopedId
-
-
-  if (scopeId) {
-    options._scopeId = scopeId;
-  }
-
-  var hook;
-
-  if (moduleIdentifier) {
-    // server build
-    hook = function hook(context) {
-      // 2.3 injection
-      context = context || // cached call
-      this.$vnode && this.$vnode.ssrContext || // stateful
-      this.parent && this.parent.$vnode && this.parent.$vnode.ssrContext; // functional
-      // 2.2 with runInNewContext: true
-
-      if (!context && typeof __VUE_SSR_CONTEXT__ !== 'undefined') {
-        context = __VUE_SSR_CONTEXT__;
-      } // inject component styles
-
-
-      if (style) {
-        style.call(this, createInjectorSSR(context));
-      } // register component module identifier for async chunk inference
-
-
-      if (context && context._registeredComponents) {
-        context._registeredComponents.add(moduleIdentifier);
-      }
-    }; // used by ssr in case component is cached and beforeCreate
-    // never gets called
-
-
-    options._ssrRegister = hook;
-  } else if (style) {
-    hook = shadowMode ? function () {
-      style.call(this, createInjectorShadow(this.$root.$options.shadowRoot));
-    } : function (context) {
-      style.call(this, createInjector(context));
-    };
-  }
-
-  if (hook) {
-    if (options.functional) {
-      // register for functional component in vue file
-      var originalRender = options.render;
-
-      options.render = function renderWithStyleInjection(h, context) {
-        hook.call(context);
-        return originalRender(h, context);
-      };
-    } else {
-      // inject component registration as beforeCreate hook
-      var existing = options.beforeCreate;
-      options.beforeCreate = existing ? [].concat(existing, hook) : [hook];
-    }
-  }
-
-  return script;
-}
-
-var normalizeComponent_1 = normalizeComponent;function createInjectorSSR(context) {
-  if (!context && typeof __VUE_SSR_CONTEXT__ !== 'undefined') {
-    context = __VUE_SSR_CONTEXT__;
-  }
-
-  if (!context) { return function () {}; }
-
-  if (!('styles' in context)) {
-    context._styles = context._styles || {};
-    Object.defineProperty(context, 'styles', {
-      enumerable: true,
-      get: function get() {
-        return context._renderStyles(context._styles);
-      }
-    });
-    context._renderStyles = context._renderStyles || renderStyles;
-  }
-
-  return function (id, style) {
-    return addStyle(id, style, context);
-  };
-}
-
-function addStyle(id, css, context) {
-  var group =  css.media || 'default' ;
-  var style = context._styles[group] || (context._styles[group] = {
-    ids: [],
-    css: ''
-  });
-
-  if (!style.ids.includes(id)) {
-    style.media = css.media;
-    style.ids.push(id);
-    var code = css.source;
-
-    style.css += code + '\n';
-  }
-}
-
-function renderStyles(styles) {
-  var css = '';
-
-  for (var key in styles) {
-    var style = styles[key];
-    css += '<style data-vue-ssr-id="' + Array.from(style.ids).join(' ') + '"' + (style.media ? ' media="' + style.media + '"' : '') + '>' + style.css + '</style>';
-  }
-
-  return css;
-}
-
-var server = createInjectorSSR;/* script */
+};/* script */
 var __vue_script__ = script;
 
 /* template */
-var __vue_render__ = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"__snackbardContainer",attrs:{"id":_vm.id}},[_c('transition-group',{attrs:{"name":"fade"}},[_c('div',{directives:[{name:"show",rawName:"v-show",value:(_vm.show),expression:"show"}],key:("snackbard_key_" + _vm.id),staticClass:"__snackbardBox",style:(_vm.computedBackgroundColor)},[_c('div',{staticClass:"__snackbardText"},[(_vm.loading)?_c('span',[_vm._v("\n          "+_vm._s(_vm.computedLoadingText)+"\n        ")]):_c('span',[_vm._v("\n          "+_vm._s(_vm.text)+"\n        ")])]),_vm._v(" "),(_vm.loading)?_c('spinner',{attrs:{"size":_vm.spinnerSize,"line-fg-color":_vm.spinnerColor,"line-bg-color":_vm.backgroundColor,"indeterminate":""}}):_c('div',{staticClass:"__snackbardButton",style:(("color: " + _vm.buttonColor + ";")),on:{"click":function($event){return _vm.fireClickEvent()}}},[_vm._v("\n        "+_vm._s(_vm.buttonText)+"\n      ")])],1)])],1)};
+var __vue_render__ = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"__snackbardContainer",class:{ '__snackbardTop': _vm.position === 'top', '__snackbardBottom': _vm.position === 'bottom' },attrs:{"id":_vm.id}},[_c('transition-group',{attrs:{"name":"fade"}},[_c('div',{directives:[{name:"show",rawName:"v-show",value:(_vm.show),expression:"show"}],key:("snackbard_key_" + _vm.id),staticClass:"__snackbardBox",style:(_vm.computedBackgroundColor)},[_c('div',{staticClass:"__snackbardText"},[(_vm.loading)?_c('span',[_vm._v("\n          "+_vm._s(_vm.computedLoadingText)+"\n        ")]):_c('span',[_vm._v("\n          "+_vm._s(_vm.text)+"\n        ")])]),_vm._v(" "),(_vm.loading)?_c('spinner',{attrs:{"size":_vm.spinnerSize,"line-fg-color":_vm.spinnerColor,"line-bg-color":_vm.backgroundColor,"indeterminate":""}}):_c('div',{staticClass:"__snackbardButton",style:(("color: " + _vm.buttonColor + ";")),on:{"click":function($event){return _vm.fireClickEvent()}}},[_vm._v("\n        "+_vm._s(_vm.buttonText)+"\n      ")])],1)])],1)};
 var __vue_staticRenderFns__ = [];
 
   /* style */
   var __vue_inject_styles__ = function (inject) {
     if (!inject) { return }
-    inject("data-v-3ec838b0_0", { source: "@import url(https://fonts.googleapis.com/css?family=Roboto);.__snackbardContainer[data-v-3ec838b0]{display:flex;flex-direction:row;justify-content:center;align-content:center;top:0;width:500px;z-index:1000;position:absolute;left:50%;margin-left:-250px;position:fixed}.__snackbardBox[data-v-3ec838b0]{border-radius:3px;display:inline-flex;align-items:center;min-width:250px;max-width:500px;max-height:80px;padding:14px 24px;display:grid;grid-template-columns:3fr 1fr;grid-template-rows:auto;grid-gap:24px;grid-template-areas:\"text action\";box-shadow:0 1px 10px 0 rgba(0,0,0,.75)}.__snackbardText[data-v-3ec838b0]{grid-area:text;color:#fff}.__snackbardButton[data-v-3ec838b0]{grid-area:action;text-transform:uppercase;cursor:pointer;user-select:none;text-align:center}*[data-v-3ec838b0]{font-family:Roboto}.fade-enter-active[data-v-3ec838b0],.fade-leave-active[data-v-3ec838b0]{transition:all .4s ease}.fade-enter[data-v-3ec838b0],.fade-leave-to[data-v-3ec838b0]{transform:translateY(-30px);opacity:0}", map: undefined, media: undefined });
+    inject("data-v-7f9793e0_0", { source: "@import url(https://fonts.googleapis.com/css?family=Roboto);.__snackbardContainer[data-v-7f9793e0]{display:flex;flex-direction:row;justify-content:center;align-content:center;width:500px;z-index:1000;position:absolute;left:50%;margin-left:-250px;position:fixed}.__snackbardTop[data-v-7f9793e0]{top:0}.__snackbardBottom[data-v-7f9793e0]{bottom:0}.__snackbardBox[data-v-7f9793e0]{border-radius:3px;display:inline-flex;align-items:center;min-width:250px;max-width:500px;max-height:80px;padding:14px 24px;display:grid;grid-template-columns:3fr 1fr;grid-template-rows:auto;grid-gap:24px;grid-template-areas:\"text action\";box-shadow:0 1px 10px 0 rgba(0,0,0,.75)}.__snackbardText[data-v-7f9793e0]{grid-area:text;color:#fff}.__snackbardButton[data-v-7f9793e0]{grid-area:action;text-transform:uppercase;cursor:pointer;user-select:none;text-align:center}*[data-v-7f9793e0]{font-family:Roboto}.fade-enter-active[data-v-7f9793e0],.fade-leave-active[data-v-7f9793e0]{transition:all .4s ease}.fade-enter[data-v-7f9793e0],.fade-leave-to[data-v-7f9793e0]{transform:translateY(-30px);opacity:0}", map: undefined, media: undefined });
 
   };
   /* scoped */
-  var __vue_scope_id__ = "data-v-3ec838b0";
+  var __vue_scope_id__ = "data-v-7f9793e0";
   /* module identifier */
-  var __vue_module_identifier__ = "data-v-3ec838b0";
+  var __vue_module_identifier__ = "data-v-7f9793e0";
   /* functional template */
   var __vue_is_functional_template__ = false;
+  /* style inject shadow dom */
+  
 
   
-  var snackbard = normalizeComponent_1(
+  var snackbard = vueRuntimeHelpers.normalizeComponent(
     { render: __vue_render__, staticRenderFns: __vue_staticRenderFns__ },
     __vue_inject_styles__,
     __vue_script__,
     __vue_scope_id__,
     __vue_is_functional_template__,
     __vue_module_identifier__,
+    false,
     undefined,
-    server
+    vueRuntimeHelpers.createInjectorSSR,
+    undefined
   );// Import vue component
 var transitionTime = 300;
 var openSnackbar = {};
@@ -331,6 +210,7 @@ function show (Vue, config) {
         color: config.color,
         id: snackbardDivId,
         loading: config.loading,
+        position: config.position,
         spinnerSize: config.spinnerSize,
         spinnerColor: config.spinnerColor,
         text: config.text,
