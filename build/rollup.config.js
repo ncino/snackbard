@@ -1,12 +1,16 @@
 // rollup.config.js
+import path from 'path';
 import vue from 'rollup-plugin-vue';
-import buble from 'rollup-plugin-buble';
+import alias from '@rollup/plugin-alias';
+import buble from '@rollup/plugin-buble';
 import commonjs from 'rollup-plugin-commonjs';
-import replace from 'rollup-plugin-replace';
+import replace from '@rollup/plugin-replace';
 import { terser } from 'rollup-plugin-terser';
 import minimist from 'minimist';
 
 const argv = minimist(process.argv.slice(2));
+
+const projectRoot = path.resolve(__dirname, '..');
 
 const baseConfig = {
   input: 'src/entry.js',
@@ -16,6 +20,12 @@ const baseConfig = {
         'process.env.NODE_ENV': JSON.stringify('production'),
       }),
       commonjs(),
+      alias({
+        resolve: ['.jsx', '.js', '.vue'],
+        entries: {
+          '@': path.resolve(projectRoot, 'src'),
+        },
+      }),
     ],
     vue: {
       css: true,
@@ -29,12 +39,15 @@ const baseConfig = {
   },
 };
 
-// UMD/IIFE shared settings: externals and output.globals
-// Refer to https://rollupjs.org/guide/en#output-globals for details
+// ESM/UMD/IIFE shared settings: externals
+// Refer to https://rollupjs.org/guide/en/#warning-treating-module-as-external-dependency
 const external = [
   // list external dependencies, exactly the way it is written in the import statement.
   // eg. 'jquery'
 ];
+
+// UMD/IIFE shared settings: output.globals
+// Refer to https://rollupjs.org/guide/en#output-globals for details
 const globals = {
   // Provide global variable names to replace your external imports
   // eg. jquery: '$'
@@ -45,6 +58,7 @@ const buildFormats = [];
 if (!argv.format || argv.format === 'es') {
   const esConfig = {
     ...baseConfig,
+    external,
     output: {
       file: 'dist/snackbard.esm.js',
       format: 'esm',
@@ -54,11 +68,6 @@ if (!argv.format || argv.format === 'es') {
       ...baseConfig.plugins.preVue,
       vue(baseConfig.plugins.vue),
       ...baseConfig.plugins.postVue,
-      terser({
-        output: {
-          ecma: 6,
-        },
-      }),
     ],
   };
   buildFormats.push(esConfig);

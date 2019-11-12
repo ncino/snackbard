@@ -1,4 +1,4 @@
-'use strict';Object.defineProperty(exports,'__esModule',{value:true});function _interopDefault(e){return(e&&(typeof e==='object')&&'default'in e)?e['default']:e}var Vue=_interopDefault(require('vue')),Spinner=_interopDefault(require('vue-simple-spinner')),vueRuntimeHelpers=require('vue-runtime-helpers');//
+'use strict';Object.defineProperty(exports,'__esModule',{value:true});function _interopDefault(e){return(e&&(typeof e==='object')&&'default'in e)?e['default']:e}var Vue=_interopDefault(require('vue')),Spinner=_interopDefault(require('vue-simple-spinner'));//
 var script = {
   name: 'Snackbard',
   components: { Spinner: Spinner },
@@ -110,7 +110,120 @@ var script = {
       this.$emit('close');
     }
   }
-};/* script */
+};function normalizeComponent(template, style, script, scopeId, isFunctionalTemplate, moduleIdentifier /* server only */, shadowMode, createInjector, createInjectorSSR, createInjectorShadow) {
+    if (typeof shadowMode !== 'boolean') {
+        createInjectorSSR = createInjector;
+        createInjector = shadowMode;
+        shadowMode = false;
+    }
+    // Vue.extend constructor export interop.
+    var options = typeof script === 'function' ? script.options : script;
+    // render functions
+    if (template && template.render) {
+        options.render = template.render;
+        options.staticRenderFns = template.staticRenderFns;
+        options._compiled = true;
+        // functional template
+        if (isFunctionalTemplate) {
+            options.functional = true;
+        }
+    }
+    // scopedId
+    if (scopeId) {
+        options._scopeId = scopeId;
+    }
+    var hook;
+    if (moduleIdentifier) {
+        // server build
+        hook = function (context) {
+            // 2.3 injection
+            context =
+                context || // cached call
+                    (this.$vnode && this.$vnode.ssrContext) || // stateful
+                    (this.parent && this.parent.$vnode && this.parent.$vnode.ssrContext); // functional
+            // 2.2 with runInNewContext: true
+            if (!context && typeof __VUE_SSR_CONTEXT__ !== 'undefined') {
+                context = __VUE_SSR_CONTEXT__;
+            }
+            // inject component styles
+            if (style) {
+                style.call(this, createInjectorSSR(context));
+            }
+            // register component module identifier for async chunk inference
+            if (context && context._registeredComponents) {
+                context._registeredComponents.add(moduleIdentifier);
+            }
+        };
+        // used by ssr in case component is cached and beforeCreate
+        // never gets called
+        options._ssrRegister = hook;
+    }
+    else if (style) {
+        hook = shadowMode
+            ? function (context) {
+                style.call(this, createInjectorShadow(context, this.$root.$options.shadowRoot));
+            }
+            : function (context) {
+                style.call(this, createInjector(context));
+            };
+    }
+    if (hook) {
+        if (options.functional) {
+            // register for functional component in vue file
+            var originalRender = options.render;
+            options.render = function renderWithStyleInjection(h, context) {
+                hook.call(context);
+                return originalRender(h, context);
+            };
+        }
+        else {
+            // inject component registration as beforeCreate hook
+            var existing = options.beforeCreate;
+            options.beforeCreate = existing ? [].concat(existing, hook) : [hook];
+        }
+    }
+    return script;
+}function createInjectorSSR(context) {
+    if (!context && typeof __VUE_SSR_CONTEXT__ !== 'undefined') {
+        context = __VUE_SSR_CONTEXT__;
+    }
+    if (!context)
+        { return function () { }; }
+    if (!('styles' in context)) {
+        context._styles = context._styles || {};
+        Object.defineProperty(context, 'styles', {
+            enumerable: true,
+            get: function () { return context._renderStyles(context._styles); }
+        });
+        context._renderStyles = context._renderStyles || renderStyles;
+    }
+    return function (id, style) { return addStyle(id, style, context); };
+}
+function addStyle(id, css, context) {
+    var group =  css.media || 'default' ;
+    var style = context._styles[group] || (context._styles[group] = { ids: [], css: '' });
+    if (!style.ids.includes(id)) {
+        style.media = css.media;
+        style.ids.push(id);
+        var code = css.source;
+        style.css += code + '\n';
+    }
+}
+function renderStyles(styles) {
+    var css = '';
+    for (var key in styles) {
+        var style = styles[key];
+        css +=
+            '<style data-vue-ssr-id="' +
+                Array.from(style.ids).join(' ') +
+                '"' +
+                (style.media ? ' media="' + style.media + '"' : '') +
+                '>' +
+                style.css +
+                '</style>';
+    }
+    return css;
+}/* script */
 var __vue_script__ = script;
 
 /* template */
@@ -133,7 +246,7 @@ var __vue_staticRenderFns__ = [];
   
 
   
-  var snackbard = vueRuntimeHelpers.normalizeComponent(
+  var snackbard = normalizeComponent(
     { render: __vue_render__, staticRenderFns: __vue_staticRenderFns__ },
     __vue_inject_styles__,
     __vue_script__,
@@ -142,7 +255,7 @@ var __vue_staticRenderFns__ = [];
     __vue_module_identifier__,
     false,
     undefined,
-    vueRuntimeHelpers.createInjectorSSR,
+    createInjectorSSR,
     undefined
   );// Import vue component
 var transitionTime = 300;
