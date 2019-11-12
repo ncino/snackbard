@@ -57,6 +57,7 @@ function show (Vue, config) {
         color: config.color,
         id: snackbardDivId,
         loading: config.loading,
+        position: config.position,
         spinnerSize: config.spinnerSize,
         spinnerColor: config.spinnerColor,
         text: config.text,

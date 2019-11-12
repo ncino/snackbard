@@ -3,6 +3,7 @@
   <div
     :id="id"
     class="__snackbardContainer"
+    :class="{ '__snackbardTop': position === 'top', '__snackbardBottom': position === 'bottom' }"
   >
     <transition-group name="fade">
       <div
@@ -71,6 +72,14 @@ export default {
       type: Boolean,
       required: false,
       default: false
+    },
+    position: {
+      type: String,
+      required: false,
+      default: 'top',
+      validator: function (value) {
+        return ['top', 'bottom'].includes(value)
+      }
     },
     spinnerColor: {
       type: String,
@@ -154,13 +163,18 @@ export default {
   flex-direction: row;
   justify-content: center;
   align-content: center;
-  top: 0px;
   width: 500px;
   z-index: 1000;
   position: absolute;
   left: 50%;
   margin-left: -250px;
   position: fixed;
+}
+.__snackbardTop {
+  top: 0px;
+}
+.__snackbardBottom {
+  bottom: 0px;
 }
 .__snackbardBox {
   border-radius: 3px;

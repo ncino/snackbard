@@ -23,6 +23,7 @@ export declare type SnackbardPayload = {
     buttonText?: string
     color?: string
     loading?: boolean
+    position?: string
     spinnerSize?: string
     spinnerColor?: string
     text?: string
