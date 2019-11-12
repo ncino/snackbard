@@ -213,6 +213,9 @@ methods: {
 
 ## Contributing
 
+`yarn install`
+`yarn build`
+
 An informal list of things that need to be done:
 
 * Write tests & integrate with TravisCI
