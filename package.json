@@ -1,6 +1,6 @@
 {
   "name": "snackbard",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "An Elizabethan Vue plugin to help with snackbar management.",
   "author": "Josh Menden",
   "license": "MIT",
