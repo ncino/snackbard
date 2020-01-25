@@ -181,7 +181,7 @@ export default {
   display: inline-flex;
   align-items: center;
   min-width: 250px;
-  max-width: 500px;
+  max-width: 100vw;
   max-height: 80px;
   padding: 14px 24px;
   display: grid;
