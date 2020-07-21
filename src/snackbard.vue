@@ -125,6 +125,7 @@ export default {
       else if (this.color === 'error') return '#ed5f59'
       else if (this.color === 'warning') return '#f7c244'
       else if (this.color === 'info') return '#4496ec'
+      else if (this.color) return this.color
       else return '#2c2c2c'
     },
     computedLoadingText () {
